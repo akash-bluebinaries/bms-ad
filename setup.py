@@ -21,7 +21,7 @@ def get_requirements(file_path:str)->List[str]:
 
 setup(
 
-name = 'bms-ad',
+name = 'BMS-AD',
     version = '0.0.1',
     author = 'BlueBinaries Engg & Tech Solutions',
     author_email='akash.dash@bluebinaries.com',
