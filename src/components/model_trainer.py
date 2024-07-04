@@ -22,21 +22,21 @@ class ModelTrainer:
 
     def initiate_model_trainer(self,train_array,test_array):
         try:
-            logging.info("  Split training and test input data")
+            logging.info("Split training and test input data")
             X_train,y_train,X_test,y_test=(
                 train_array[:,:-1],
                 train_array[:,-1],
                 test_array[:,:-1],
                 test_array[:,-1]
             )
-            logging.info("  Defining algorithms for Hyper-parameter tuning")
+            logging.info("Defining algorithms for Hyper-parameter tuning")
             models = {
                 "Logistic Regression": LogisticRegression(),
                 "Random Forest": RandomForestClassifier(),
                 "Decision Tree": DecisionTreeClassifier(),
                 
             }
-            logging.info("  Defining parameters for Hyper-parameter tuning")
+            logging.info("Defining parameters for Hyper-parameter tuning")
             params={
                 "Decision Tree": {
                     'criterion':['gini','log_loss', 'entropy']
@@ -57,7 +57,7 @@ class ModelTrainer:
                 
             }
 
-            logging.info("  Starting evaluation of models")
+            logging.info("Starting evaluation of models")
 
             model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
                                              models=models,param=params)
@@ -74,7 +74,7 @@ class ModelTrainer:
 
             if best_model_score<0.6:
                 raise CustomException("No best model found")
-            logging.info(f" Best found model on both training and testing dataset")
+            logging.info(f"Best found model on both training and testing dataset")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
@@ -82,13 +82,12 @@ class ModelTrainer:
             )
 
             predicted=best_model.predict(X_test)
-
             accuracy = accuracy_score(y_test, predicted)
+            logging.info("*** Model Training Completed ***")
             return accuracy, print("Accuracy for best model is", accuracy*100,'%')
             
-
-
-
+        
             
+    
         except Exception as e:
             raise CustomException(e,sys)

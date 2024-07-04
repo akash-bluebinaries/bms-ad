@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Predict Data</h1>
+        <form method="POST" action="/predictdata">
+            <div class="form-group">
+                <label for="CellVoltage">Cell Voltage (V)</label>
+                <input type="text" class="form-control" id="CellVoltage" name="CellVoltage(V)" required>
+            </div>
+            <div class="form-group">
+                <label for="PackVoltage">Pack Voltage (V)</label>
+                <input type="text" class="form-control" id="PackVoltage" name="PackVoltage(V)" required>
+            </div>
+            <div class="form-group">
+                <label for="ChargingCurrent">Charging Current (mA)</label>
+                <input type="text" class="form-control" id="ChargingCurrent" name="ChargingCurrent(mA)" required>
+            </div>
+            <div class="form-group">
+                <label for="DischargeCurrent">Discharge Current (mA)</label>
+                <input type="text" class="form-control" id="DischargeCurrent" name="DischargeCurrent(mA)" required>
+            </div>
+            <div class="form-group">
+                <label for="BatteryTemperature">Battery Temperature (C)</label>
+                <input type="text" class="form-control" id="BatteryTemperature" name="BatteryTemperature(C)" required>
+            </div>
+            <div class="form-group">
+                <label for="CellTemperature">Cell Temperature (C)</label>
+                <input type="text" class="form-control" id="CellTemperature" name="CellTemperature(C)" required>
+            </div>
+            <div class="form-group">
+                <label for="AmbientTemp">Ambient Temp (C)</label>
+                <input type="text" class="form-control" id="AmbientTemp" name="AmbientTemp(C)" required>
+            </div>
+            <div class="form-group">
+                <label for="coolingSysTemp">Cooling Sys Temp (C)</label>
+                <input type="text" class="form-control" id="coolingSysTemp" name="coolingSysTemp(C)" required>
+            </div>
+            <div class="form-group">
+                <label for="stateOfCharge">State of Charge (SOC)</label>
+                <input type="text" class="form-control" id="stateOfCharge" name="stateOfCharge(SOC)" required>
+            </div>
+            <div class="form-group">
+                <label for="stateOfHealth">State of Health (SOH)</label>
+                <input type="text" class="form-control" id="stateOfHealth" name="stateOfHealth(SOH)" required>
+            </div>
+            <div class="form-group">
+                <label for="stateOfPower">State of Power (SOP)</label>
+                <input type="text" class="form-control" id="stateOfPower" name="stateOfPower(SOP)" required>
+            </div>
+            <div class="form-group">
+                <label for="internalResistance">Internal Resistance (ohm)</label>
+                <input type="text" class="form-control" id="internalResistance" name="internalResistance(ohm)" required>
+            </div>
+            <div class="form-group">
+                <label for="CycleCount">Cycle Count</label>
+                <input type="text" class="form-control" id="CycleCount" name="CycleCount" required>
+            </div>
+            <div class="form-group">
+                <label for="Velocity">Velocity [km/h]</label>
+                <input type="text" class="form-control" id="Velocity" name="Velocity [km/h]" required>
+            </div>
+            <div class="form-group">
+                <label for="Elevation">Elevation [m]</label>
+                <input type="text" class="form-control" id="Elevation" name="Elevation [m]" required>
+            </div>
+            <div class="form-group">
+                <label for="Throttle">Throttle [%]</label>
+                <input type="text" class="form-control" id="Throttle" name="Throttle [%]" required>
+            </div>
+            <div class="form-group">
+                <label for="MotorTorque">Motor Torque [Nm]</label>
+                <input type="text" class="form-control" id="MotorTorque" name="Motor Torque [Nm]" required>
+            </div>
+            <div class="form-group">
+                <label for="LongitudinalAcceleration">Longitudinal Acceleration [m/s^2]</label>
+                <input type="text" class="form-control" id="LongitudinalAcceleration" name="Longitudinal Acceleration [m/s^2]" required>
+            </div>
+            <div class="form-group">
+                <label for="RegenerativeBrakingSignal">Regenerative Braking Signal</label>
+                <input type="text" class="form-control" id="RegenerativeBrakingSignal" name="Regenerative Braking Signal" required>
+            </div>
+            <div class="form-group">
+                <label for="BatteryVoltage">Battery Voltage [V]</label>
+                <input type="text" class="form-control" id="BatteryVoltage" name="Battery Voltage [V]" required>
+            </div>
+            <div class="form-group">
+                <label for="BatteryCurrent">Battery Current [A]</label>
+                <input type="text" class="form-control" id="BatteryCurrent" name="Battery Current [A]" required>
+            </div>
+            <div class="form-group">
+                <label for="SoC">SoC</label>
+                <input type="text" class="form-control" id="SoC" name="SoC" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+        {% if results is defined %}
+            <h2 class="mt-5">Prediction Results</h2>
+            <p>{{ results }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

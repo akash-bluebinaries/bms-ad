@@ -9,6 +9,8 @@ seaborn
 matplotlib
 scikit-learn
 dill
-Adaboost
+# log_viewer
+
+
 
 -e .

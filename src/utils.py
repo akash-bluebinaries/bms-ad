@@ -58,3 +58,20 @@ def load_object(file_path):
 
     except Exception as e:
         raise CustomException(e, sys)
+    
+
+
+
+# def read_logs(log_file):
+#     """
+#     Read the recent logs from the log file.
+#     :param log_file: str - Path to the log file
+#     :return: str - Recent log details
+#     """
+#     if not os.path.exists(log_file):
+#         return "Log file not found."
+
+#     with open(log_file, 'r') as file:
+#         lines = file.readlines()
+#     return ''.join(lines)
+
