@@ -7,8 +7,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-# from src.components.data_transformation import DataTransformation
-# from src.components.data_transformation import DataTransformationConfig
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 
 # from src.components.model_trainer import ModelTrainerConfig
 # from src.components.model_trainer import ModelTrainer
@@ -23,23 +23,24 @@ class DataIngestion:
         self.ingestion_config=DataIngestionConfig()
 
     def initiate_data_ingestion(self):
-        logging.info("Entered the data ingestion method or component")
+        logging.info("Entered Data_Ingestion component")
         try:
             df=pd.read_csv('notebook\data\data.csv')
-            logging.info('Read the dataset as dataframe')
+            logging.info('Read data as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
 
             df.to_csv(self.ingestion_config.raw_data_path,index=False,header=True)
 
-            logging.info("Train test split initiated")
+            logging.info("Initiating split of data into Train & test")
             train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
 
+            logging.info("Saving train data as csv to artifacts folder")
             train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
-
+            logging.info("Saving test data as csv to artifacts folder")
             test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
-            logging.info("Ingestion of the data is completed")
+            logging.info("Data Ingestion Completed")
 
             return(
                 self.ingestion_config.train_data_path,
@@ -53,8 +54,8 @@ if __name__=="__main__":
     obj=DataIngestion()
     train_data,test_data=obj.initiate_data_ingestion()
 
-    # data_transformation=DataTransformation()
-    # train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
+    data_transformation=DataTransformation()
+    train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
 
     # modeltrainer=ModelTrainer()
     # print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
