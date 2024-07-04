@@ -1,6 +1,7 @@
+setuptools
 pandas
 numpy
-sklearn
+# sklearn
 flask
 joblib
 # pickle
