@@ -9,5 +9,6 @@ seaborn
 matplotlib
 scikit-learn
 dill
+Adaboost
 
 -e .

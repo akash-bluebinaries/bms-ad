@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import dill
 import pickle
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 
 from src.exception import CustomException
@@ -35,8 +35,6 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
 
             model.set_params(**gs.best_params_)
             model.fit(X_train,y_train)
-
-            #model.fit(X_train, y_train)  # Train model
 
             y_train_pred = model.predict(X_train)
 

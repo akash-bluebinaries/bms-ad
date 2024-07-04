@@ -2,20 +2,13 @@ import os
 import sys
 from dataclasses import dataclass
 
-# from catboost import CatBoostRegressor
-from sklearn.ensemble import (
-    AdaBoostClassifier,
-    GradientBoostingClassifier,
-    RandomForestClassifier,
-)
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, roc_auc_score
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, roc_auc_score
 
 from src.exception import CustomException
 from src.logger import logging
-
 from src.utils import save_object,evaluate_models
 
 @dataclass
@@ -29,24 +22,24 @@ class ModelTrainer:
 
     def initiate_model_trainer(self,train_array,test_array):
         try:
-            logging.info("Split training and test input data")
+            logging.info("  Split training and test input data")
             X_train,y_train,X_test,y_test=(
                 train_array[:,:-1],
                 train_array[:,-1],
                 test_array[:,:-1],
                 test_array[:,-1]
             )
+            logging.info("  Defining algorithms for Hyper-parameter tuning")
             models = {
+                "Logistic Regression": LogisticRegression(),
                 "Random Forest": RandomForestClassifier(),
                 "Decision Tree": DecisionTreeClassifier(),
-                "Gradient Boosting": GradientBoostingClassifier(),
-                "Logistic Regression": LogisticRegression(),
-                "CatBoosting Regressor": (verbose=False),
-                "AdaBoost Classifier": AdaBoostClassifier(),
+                
             }
+            logging.info("  Defining parameters for Hyper-parameter tuning")
             params={
                 "Decision Tree": {
-                    'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    'criterion':['gini','log_loss', 'entropy']
                     # 'splitter':['best','random'],
                     # 'max_features':['sqrt','log2'],
                 },
@@ -54,33 +47,17 @@ class ModelTrainer:
                     # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
                  
                     # 'max_features':['sqrt','log2',None],
-                    'n_estimators': [8,16,32,64,128,256]
-                },
-                "Gradient Boosting":{
-                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
-                    'learning_rate':[.1,.01,.05,.001],
-                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
-                    # 'criterion':['squared_error', 'friedman_mse'],
-                    # 'max_features':['auto','sqrt','log2'],
-                    'n_estimators': [8,16,32,64,128,256]
+                    'n_estimators': [8,16,32,64]
                 },
                 "Logistic Regression":{},
                 "XGBRegressor":{
-                    'learning_rate':[.1,.01,.05,.001],
-                    'n_estimators': [8,16,32,64,128,256]
-                },
-                "CatBoosting Regressor":{
-                    'depth': [6,8,10],
-                    'learning_rate': [0.01, 0.05, 0.1],
-                    'iterations': [30, 50, 100]
-                },
-                "AdaBoost Classifier":{
-                    'learning_rate':[.1,.01,0.5,.001],
-                    # 'loss':['linear','square','exponential'],
-                    'n_estimators': [8,16,32,64,128,256]
+                    'learning_rate':[.1,.01,.05],
+                    'n_estimators': [8,16,32,64]
                 }
                 
             }
+
+            logging.info("  Starting evaluation of models")
 
             model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
                                              models=models,param=params)
@@ -97,7 +74,7 @@ class ModelTrainer:
 
             if best_model_score<0.6:
                 raise CustomException("No best model found")
-            logging.info(f"Best found model on both training and testing dataset")
+            logging.info(f" Best found model on both training and testing dataset")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
@@ -106,8 +83,8 @@ class ModelTrainer:
 
             predicted=best_model.predict(X_test)
 
-            r2_square = r2_score(y_test, predicted)
-            return r2_square
+            accuracy = accuracy_score(y_test, predicted)
+            return accuracy, print("Accuracy for best model is", accuracy*100,'%')
             
 
 
