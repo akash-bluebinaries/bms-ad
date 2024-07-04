@@ -1,0 +1,12 @@
+pandas
+numpy
+sklearn
+flask
+joblib
+# pickle
+seaborn
+matplotlib
+scikit-learn
+dill
+
+-e .
