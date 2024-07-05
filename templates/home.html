@@ -8,7 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Predict Data</h1>
+        <h1 class="mt-5">Enter Data to check for anomaly</h1>
+        <h1 class="mt-5"> </h1>
         <form method="POST" action="/predictdata">
             <div class="form-group">
                 <label for="CellVoltage">Cell Voltage (V)</label>
@@ -101,7 +102,7 @@
             <button type="submit" class="btn btn-primary">Predict</button>
         </form>
         {% if results is defined %}
-            <h2 class="mt-5">Prediction Results</h2>
+            <h2 class="mt-5">Based on your input; the parameter exhibit attributes of:</h2>
             <p>{{ results }}</p>
         {% endif %}
     </div>
