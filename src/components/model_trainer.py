@@ -86,8 +86,5 @@ class ModelTrainer:
             logging.info("*** Model Training Completed ***")
             return accuracy, print("Accuracy for best model is", accuracy*100,'%')
             
-        
-            
-    
         except Exception as e:
             raise CustomException(e,sys)
