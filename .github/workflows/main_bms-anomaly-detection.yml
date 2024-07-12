@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://acrbbk8s.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_1d5bf204de6e402488ee8efb3a1e586a }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_c335257ae99548c08bd3a63fb2bd4e81 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_db916d7fa42f4e4093aa0696066a2576 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_11d6bd07970d4c9ebd7817ef0554a1ec }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: acrbbk8s.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_1d5bf204de6e402488ee8efb3a1e586a }}/dep-bms-ad:${{ github.sha }}
+        tags: acrbbk8s.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_db916d7fa42f4e4093aa0696066a2576 }}/acrbbk8s/dep-bms-ad:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'bms-anomaly-detection'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_03d7d8d364374485aba0d6aa6646a972 }}
-        images: 'acrbbk8s.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_1d5bf204de6e402488ee8efb3a1e586a }}/dep-bms-ad:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4e1ec0d84d1d403b8254a5947a1e9df7 }}
+        images: 'acrbbk8s.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_db916d7fa42f4e4093aa0696066a2576 }}/acrbbk8s/dep-bms-ad:${{ github.sha }}'
